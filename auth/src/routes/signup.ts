@@ -3,11 +3,10 @@ import { body } from 'express-validator'
 import jwt from 'jsonwebtoken';
 
 
-// Error classes
-import { BadRequestError } from '../errors/bad-request-error'
+
+import { BadRequestError, validateRequest } from '@palspticket/common'
 
 // Model 
-import { validateRequest } from '../middleware/validate-request'
 import { User } from '../models/user'
 
 

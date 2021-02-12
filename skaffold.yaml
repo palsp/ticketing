@@ -71,3 +71,11 @@ build:
         manual:
           - src: '**/*.js'
             dest: .
+    - image: palsp/expiration
+      context: expiration
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '**/*.js'
+            dest: .

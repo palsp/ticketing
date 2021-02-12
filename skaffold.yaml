@@ -79,3 +79,11 @@ build:
         manual:
           - src: '**/*.js'
             dest: .
+    - image: palsp/payments
+      context: payments
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '**/*.js'
+            dest: .

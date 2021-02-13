@@ -13,7 +13,7 @@ declare global {
 }
 
 let mongo: any;
-beforeAll(async () => {
+beforeAll(async (done) => {
 
     process.env.JWT_KEY = 'asdfasdfaf';
     mongo = new MongoMemoryServer();
@@ -23,19 +23,21 @@ beforeAll(async () => {
         useNewUrlParser: true,
         useUnifiedTopology: true,
     });
-
+    done();
 
 
 });
 
 
-beforeEach(async () => {
+beforeEach(async (done) => {
 
+    jest.setTimeout(30000);
     const collections = await mongoose.connection.db.collections();
     // clear db
     for (let collection of collections) {
         await collection.deleteMany({})
     }
+    done();
 
 });
 

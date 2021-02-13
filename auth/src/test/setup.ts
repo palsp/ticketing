@@ -13,7 +13,7 @@ declare global {
 }
 
 let mongo: any;
-beforeEach(async (done) => {
+beforeEach(async () => {
 
     jest.setTimeout(30000);
     process.env.JWT_KEY = 'asdfasdfaf';
@@ -24,7 +24,6 @@ beforeEach(async (done) => {
         useNewUrlParser: true,
         useUnifiedTopology: true,
     });
-    done();
 
 
 });
@@ -42,11 +41,11 @@ beforeEach(async (done) => {
 
 // });
 
-afterEach(async (done) => {
+afterEach(async () => {
 
     await mongo.stop();
     await mongoose.connection.close();
-    done();
+
 
 });
 

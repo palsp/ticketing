@@ -40,24 +40,23 @@ it('fails when an incorrect password is supplied', async () => {
 })
 
 it('responds with a cookie when given a valid credentials', async () => {
-    try {
-        await request(app)
-            .post('/api/users/signup')
-            .send({
-                email: 'test@test.com',
-                password: 'password'
-            })
-            .expect(201);
 
-        const response = await request(app)
-            .post('/api/users/signin')
-            .send({
-                email: 'test@test.com',
-                password: 'password'
-            })
-            .expect(200);
+    await request(app)
+        .post('/api/users/signup')
+        .send({
+            email: 'test@test.com',
+            password: 'password'
+        })
+        .expect(201);
 
-        expect(response.get('Set-Cookie')).toBeDefined();
-    } catch (err) { }
+    const response = await request(app)
+        .post('/api/users/signin')
+        .send({
+            email: 'test@test.com',
+            password: 'password'
+        })
+        .expect(200);
+
+    expect(response.get('Set-Cookie')).toBeDefined();
 
 })

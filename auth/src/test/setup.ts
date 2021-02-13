@@ -17,41 +17,33 @@ beforeAll(async () => {
 
     process.env.JWT_KEY = 'asdfasdfaf';
     mongo = new MongoMemoryServer();
-    jest.setTimeout(3 * 5000)
-    try {
-        const mongoUri = await mongo.getUri();
-        await mongoose.connect(mongoUri, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-        });
-    } catch (err) {
-        expect(err).toBe(err);
-    }
+
+    const mongoUri = await mongo.getUri();
+    await mongoose.connect(mongoUri, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    });
+
 
 
 });
 
 
 beforeEach(async () => {
-    try {
-        const collections = await mongoose.connection.db.collections();
-        // clear db
-        for (let collection of collections) {
-            await collection.deleteMany({})
-        }
-    } catch (err) {
-        expect(err).toBe(err);
+
+    const collections = await mongoose.connection.db.collections();
+    // clear db
+    for (let collection of collections) {
+        await collection.deleteMany({})
     }
 
 });
 
 afterAll(async () => {
-    try {
-        await mongo.stop();
-        await mongoose.connection.close();
-    } catch (err) {
-        expect(err).toBe(err);
-    }
+
+    await mongo.stop();
+    await mongoose.connection.close();
+
 
 });
 

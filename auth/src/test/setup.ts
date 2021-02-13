@@ -13,37 +13,45 @@ declare global {
 }
 
 let mongo: any;
-beforeAll(async (done) => {
-    jest.setTimeout(30000);
+beforeAll(async () => {
+
     process.env.JWT_KEY = 'asdfasdfaf';
-
-
     mongo = new MongoMemoryServer();
-    const mongoUri = await mongo.getUri();
-    await mongoose.connect(mongoUri, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-    });
-
-    return done();
-});
-
-
-beforeEach(async (done) => {
-    jest.setTimeout(30000);
-    const collections = await mongoose.connection.db.collections();
-    // clear db
-    for (let collection of collections) {
-        await collection.deleteMany({})
+    try {
+        const mongoUri = await mongo.getUri();
+        await mongoose.connect(mongoUri, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        });
+    } catch (err) {
+        expect(err).toBe(err);
     }
-    return done();
+
+
 });
 
-afterAll(async (done) => {
-    jest.setTimeout(30000);
-    await mongo.stop();
-    await mongoose.connection.close();
-    return done();
+
+beforeEach(async () => {
+    try {
+        const collections = await mongoose.connection.db.collections();
+        // clear db
+        for (let collection of collections) {
+            await collection.deleteMany({})
+        }
+    } catch (err) {
+        expect(err).toBe(err);
+    }
+
+});
+
+afterAll(async () => {
+    try {
+        await mongo.stop();
+        await mongoose.connection.close();
+    } catch (err) {
+        expect(err).toBe(err);
+    }
+
 });
 
 global.signup = async () => {

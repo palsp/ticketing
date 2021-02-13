@@ -13,7 +13,7 @@ declare global {
 }
 
 let mongo: any;
-beforeAll(async () => {
+beforeAll(async (done) => {
     process.env.JWT_KEY = 'asdfasdfaf';
 
     mongo = new MongoMemoryServer();
@@ -21,21 +21,25 @@ beforeAll(async () => {
     await mongoose.connect(mongoUri, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
-    })
+    });
+
+    return done();
 });
 
 
-beforeEach(async () => {
+beforeEach(async (done) => {
     const collections = await mongoose.connection.db.collections();
     // clear db
     for (let collection of collections) {
         await collection.deleteMany({})
     }
+    return done();
 });
 
-afterAll(async () => {
+afterAll(async (done) => {
     await mongo.stop();
     await mongoose.connection.close();
+    return done();
 });
 
 global.signup = async () => {

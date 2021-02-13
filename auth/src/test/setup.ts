@@ -17,6 +17,7 @@ beforeAll(async () => {
 
     process.env.JWT_KEY = 'asdfasdfaf';
     mongo = new MongoMemoryServer();
+    jest.setTimeout(3 * 5000)
     try {
         const mongoUri = await mongo.getUri();
         await mongoose.connect(mongoUri, {

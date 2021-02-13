@@ -4,7 +4,7 @@ import mongoose from 'mongoose'
 import { app } from './app'
 
 const start = async () => {
-    console.log('Starting up .....')
+    console.log('Starting up .....!!!!!!')
     // detect immediately if the secret key is not defined
     if (!process.env.JWT_KEY) {
         throw new Error('JWT_KEY must be defined')

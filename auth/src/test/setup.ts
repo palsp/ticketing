@@ -15,6 +15,7 @@ declare global {
 let mongo: any;
 beforeAll(async () => {
 
+    jest.setTimeout(30000);
     process.env.JWT_KEY = 'asdfasdfaf';
     mongo = new MongoMemoryServer();
 
@@ -23,7 +24,6 @@ beforeAll(async () => {
         useNewUrlParser: true,
         useUnifiedTopology: true,
     });
-
 
 
 });
@@ -37,13 +37,14 @@ beforeEach(async () => {
         await collection.deleteMany({})
     }
 
+
 });
 
-afterAll(async () => {
+afterAll(async (done) => {
 
     await mongo.stop();
     await mongoose.connection.close();
-
+    done();
 
 });
 
